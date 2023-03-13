@@ -26,24 +26,24 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-            AddResource(resourceTypeList.list[0], 1);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-            AddResource(resourceTypeList.list[1], 1);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-            AddResource(resourceTypeList.list[2], 1);
-        }
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
+    //         AddResource(resourceTypeList.list[0], 1);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
+    //         AddResource(resourceTypeList.list[1], 1);
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
+    //         AddResource(resourceTypeList.list[2], 1);
+    //     }
+    // }
 
     private void TestLogResourceAmountDictionary()
     {

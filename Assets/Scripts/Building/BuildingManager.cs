@@ -8,7 +8,7 @@ public class BuildingManager : MonoBehaviour
     //[SerializeField] private BuildingTypeSO buildingType;
     private BuildingTypeSO buildingType;
     private BuildingTypeListSO buildingTypeList;
-    
+
     private Camera mainCamera;
 
     private void Awake()
@@ -28,15 +28,15 @@ public class BuildingManager : MonoBehaviour
             Instantiate(buildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             buildingType = buildingTypeList.list[0];
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             buildingType = buildingTypeList.list[1];
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             buildingType = buildingTypeList.list[2];
         }
