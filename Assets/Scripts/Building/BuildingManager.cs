@@ -18,8 +18,9 @@ public class BuildingManager : MonoBehaviour
         instance = this;
 
         buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
-        activeBuildingType = buildingTypeList.list[0];
+        SetActiveBuildingType(null);
     }
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -29,7 +30,8 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
+            if (activeBuildingType != null)
+                Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
