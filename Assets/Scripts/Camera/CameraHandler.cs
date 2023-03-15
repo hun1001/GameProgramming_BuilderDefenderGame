@@ -18,6 +18,6 @@ public class CameraHandler : MonoBehaviour
     void Update()
     {
         transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * _cameraSpeed * Time.deltaTime;
-        _cinemachineVirtualCamera.m_Lens.OrthographicSize = Mathf.Clamp(_cinemachineVirtualCamera.m_Lens.OrthographicSize + (-Input.mouseScrollDelta.y * _zoomAmount * Time.deltaTime), 5, 30);
+        _cinemachineVirtualCamera.m_Lens.OrthographicSize = Mathf.Clamp(_cinemachineVirtualCamera.m_Lens.OrthographicSize + (-Input.mouseScrollDelta.y * _zoomAmount * Time.deltaTime), 10, 30);
     }
 }

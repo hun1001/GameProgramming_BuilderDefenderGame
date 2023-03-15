@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BuildingManager : MonoBehaviour
 
     private BuildingTypeSO activeBuildingType;
     public BuildingTypeSO ActiveBuildingType => activeBuildingType;
+
+    public event EventHandler OnActiveBuildingTypeChanged;
 
     private BuildingTypeListSO buildingTypeList;
 
@@ -19,10 +22,7 @@ public class BuildingManager : MonoBehaviour
 
         buildingTypeList = Resources.Load<BuildingTypeListSO>(typeof(BuildingTypeListSO).Name);
         SetActiveBuildingType(null);
-    }
 
-    private void Start()
-    {
         mainCamera = Camera.main;
     }
 
@@ -30,7 +30,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (activeBuildingType != null)
+            if (activeBuildingType != null && CanSpawnHarvester())
                 Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
         }
 
@@ -55,5 +55,18 @@ public class BuildingManager : MonoBehaviour
         return mouseWorldPosition;
     }
 
-    public void SetActiveBuildingType(BuildingTypeSO buildingType) => activeBuildingType = buildingType;
+    public void SetActiveBuildingType(BuildingTypeSO buildingType)
+    {
+        activeBuildingType = buildingType;
+        OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private bool CanSpawnHarvester()
+    {
+        BoxCollider2D boxCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
+
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)boxCollider2D.offset, boxCollider2D.size, 0f);
+
+        return colliders.Length == 0;
+    }
 }
