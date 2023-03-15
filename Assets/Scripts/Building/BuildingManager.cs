@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using System.Linq;
 
 public class BuildingManager : MonoBehaviour
 {
@@ -61,12 +62,5 @@ public class BuildingManager : MonoBehaviour
         OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private bool CanSpawnHarvester()
-    {
-        BoxCollider2D boxCollider2D = activeBuildingType.prefab.GetComponent<BoxCollider2D>();
-
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)boxCollider2D.offset, boxCollider2D.size, 0f);
-
-        return colliders.Length == 0;
-    }
+    private bool CanSpawnHarvester() => Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;
 }
