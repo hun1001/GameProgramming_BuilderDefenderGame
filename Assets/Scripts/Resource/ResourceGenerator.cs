@@ -5,7 +5,11 @@ using UnityEngine;
 public class ResourceGenerator : MonoBehaviour
 {
     private ResourceGeneratorData resourceGeneratorData;
+    public ResourceGeneratorData ResourceGeneratorData => resourceGeneratorData;
+
     private float timerMax;
+    private float timer;
+    public float TimerNormalized => timer / timerMax;
 
     private void Awake()
     {
@@ -39,11 +43,19 @@ public class ResourceGenerator : MonoBehaviour
         nearbyResourceAmount = Mathf.Clamp(nearbyResourceAmount, 0, resourceGeneratorData.maxResourceAmount);
 
         timerMax = (resourceGeneratorData.timerMax / 2f) + resourceGeneratorData.timerMax * (1 - (float)nearbyResourceAmount / resourceGeneratorData.maxResourceAmount);
+        timer = 0;
 
         while (true)
         {
-            yield return new WaitForSeconds(timerMax);
-            ResourceManager.Instance.AddResource(resourceGeneratorData.resourceType, 1);
+            //yield return new WaitForSeconds(timerMax);
+            yield return null;
+            timer += Time.deltaTime;
+
+            if (timer >= timerMax)
+            {
+                timer = 0;
+                ResourceManager.Instance.AddResource(resourceGeneratorData.resourceType, 1);
+            }
         }
     }
 }

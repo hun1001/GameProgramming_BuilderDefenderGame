@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2307574604703841941}
   - component: {fileID: 5381580633209517242}
   m_Layer: 0
-  m_Name: pfBush
+  m_Name: pfBush_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 680ad9c2b145f1445b0beb1f16aa7c4c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c53653d670c12014d957ca91448881e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7889cc33aab3cb941b115fd4df7fcaeb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
