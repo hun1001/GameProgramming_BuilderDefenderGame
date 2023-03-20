@@ -11,6 +11,8 @@ public class ResourceGenerator : MonoBehaviour
     private float timer;
     public float TimerNormalized => timer / timerMax;
 
+    public float AmountGeneratedPerSecond => 1f / timerMax;
+
     private void Awake()
     {
         resourceGeneratorData = GetComponent<BuildingTypeHolder>().buildingType.resourceGeneratorData;
@@ -19,21 +21,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private IEnumerator Start()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resourceGeneratorData.resourceDetectionRadius);
-
-        int nearbyResourceAmount = 0;
-
-        foreach (var c in colliders)
-        {
-            if (c.TryGetComponent(out ResourceNode resourceNode))
-            {
-                if (resourceNode.CompareResourceType(resourceGeneratorData.resourceType))
-                {
-                    nearbyResourceAmount++;
-                }
-                break;
-            }
-        }
+        int nearbyResourceAmount = GetNearByResourceAmount();
 
         if (nearbyResourceAmount == 0)
         {
@@ -47,7 +35,6 @@ public class ResourceGenerator : MonoBehaviour
 
         while (true)
         {
-            //yield return new WaitForSeconds(timerMax);
             yield return null;
             timer += Time.deltaTime;
 
@@ -57,5 +44,27 @@ public class ResourceGenerator : MonoBehaviour
                 ResourceManager.Instance.AddResource(resourceGeneratorData.resourceType, 1);
             }
         }
+    }
+
+    public int GetNearByResourceAmount()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resourceGeneratorData.resourceDetectionRadius);
+
+        int nearbyResourceAmount = 0;
+
+        foreach (var c in colliders)
+        {
+            if (c.TryGetComponent(out ResourceNode resourceNode))
+            {
+                if (resourceNode.CompareResourceType(resourceGeneratorData.resourceType))
+                {
+                    nearbyResourceAmount++;
+                }
+            }
+        }
+
+        nearbyResourceAmount = Mathf.Clamp(nearbyResourceAmount, 0, resourceGeneratorData.maxResourceAmount);
+
+        return nearbyResourceAmount;
     }
 }
