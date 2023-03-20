@@ -31,7 +31,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (activeBuildingType != null && CanSpawnHarvester())
+            if (activeBuildingType is not null && CanSpawnHarvester())
                 Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
         }
 
@@ -62,5 +62,5 @@ public class BuildingManager : MonoBehaviour
         OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private bool CanSpawnHarvester() => Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;
+    private bool CanSpawnHarvester() => Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;// && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), 25f).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType is not null).ToArray().Length > 0;
 }
