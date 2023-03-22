@@ -26,4 +26,6 @@ public class ToolTipUI : MonoBehaviour
 
         _rectTransform.sizeDelta = backgroundSize;
     }
+
+
 }
