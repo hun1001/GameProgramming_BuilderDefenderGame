@@ -13,8 +13,11 @@ public class ToolTipUI : MonoBehaviour
 
     // canvas와 월드 맞추려면 canvas사이즈로 나누기 position을
 
-    public void SetText(string toolTipText)
+    private float _deleteDelay = 0.5f;
+
+    public void SetText(string toolTipText, float d)
     {
+        _deleteDelay = d;
         _textMeshPro.SetText(toolTipText);
         _textMeshPro.ForceMeshUpdate();
 
@@ -25,7 +28,13 @@ public class ToolTipUI : MonoBehaviour
         Vector2 backgroundSize = textSize + paddingSize;
 
         _rectTransform.sizeDelta = backgroundSize;
+
+        StartCoroutine(AutoDelete());
     }
 
-
+    private IEnumerator AutoDelete()
+    {
+        yield return new WaitForSeconds(_deleteDelay);
+        Destroy(gameObject);
+    }
 }

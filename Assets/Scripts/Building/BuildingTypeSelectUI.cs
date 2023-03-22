@@ -1,7 +1,10 @@
+using System.ComponentModel;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class BuildingTypeSelectUI : MonoBehaviour
 {
@@ -34,11 +37,20 @@ public class BuildingTypeSelectUI : MonoBehaviour
         _arrowTransform.GetChild(1).GetComponent<Image>().sprite = _arrowSprite;
         (_arrowTransform.GetChild(1).transform as RectTransform).sizeDelta = new Vector2(-20, -20);
 
-        _arrowTransform.GetComponent<Button>().onClick.AddListener(() =>
+        EventTrigger e = _arrowTransform.GetComponent<EventTrigger>();
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+
+        entry.callback.AddListener((data) =>
         {
             BuildingManager.Instance.SetActiveBuildingType(null);
             UpdateActiveBuildingTypeButton();
         });
+
+        e.triggers.Add(entry);
+
+        AddInfoShowTrigger(e, EventTriggerType.PointerEnter, _arrowTransform.GetChild(3).gameObject, true);
+        AddInfoShowTrigger(e, EventTriggerType.PointerExit, _arrowTransform.GetChild(3).gameObject, false);
 
 
         foreach (BuildingTypeSO buildingType in buildingTypeList.list)
@@ -52,11 +64,15 @@ public class BuildingTypeSelectUI : MonoBehaviour
             buttonTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(defaultOffsetAmount + (offsetAmount * index++), 10);
             buttonTransform.GetChild(1).GetComponent<Image>().sprite = buildingType.iconSprite;
 
-            buttonTransform.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                BuildingManager.Instance.SetActiveBuildingType(buildingType);
-                UpdateActiveBuildingTypeButton();
-            });
+            //buttonTransform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = $"W: {buildingType.constructionResourceCostArray[0].Amount}" + $"
+
+            e = buttonTransform.GetComponent<EventTrigger>();
+
+            AddPointerClickTrigger(e, EventTriggerType.PointerClick, buildingType);
+
+            AddInfoShowTrigger(e, EventTriggerType.PointerEnter, buttonTransform.GetChild(3).gameObject, true);
+
+            AddInfoShowTrigger(e, EventTriggerType.PointerExit, buttonTransform.GetChild(3).gameObject, false);
 
             _buttonSelectDictionary[buildingType] = buttonTransform.GetChild(2).GetComponent<Image>();
         }
@@ -70,5 +86,32 @@ public class BuildingTypeSelectUI : MonoBehaviour
 
         foreach (BuildingTypeSO buildingType in _buttonSelectDictionary.Keys)
             _buttonSelectDictionary[buildingType].enabled = (buildingType == BuildingManager.Instance.ActiveBuildingType);
+    }
+
+    private void AddPointerClickTrigger(EventTrigger e, EventTriggerType type, BuildingTypeSO buildingType)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = type;
+
+        entry.callback.AddListener((data) =>
+        {
+            BuildingManager.Instance.SetActiveBuildingType(buildingType);
+            UpdateActiveBuildingTypeButton();
+        });
+
+        e.triggers.Add(entry);
+    }
+
+    private void AddInfoShowTrigger(EventTrigger e, EventTriggerType type, GameObject info, bool isShow = true)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = type;
+
+        entry.callback.AddListener((data) =>
+        {
+            info.SetActive(isShow);
+        });
+
+        e.triggers.Add(entry);
     }
 }
