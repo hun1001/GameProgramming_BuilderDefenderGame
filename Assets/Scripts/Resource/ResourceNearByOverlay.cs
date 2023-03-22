@@ -11,27 +11,30 @@ public class ResourceNearByOverlay : MonoBehaviour
     [SerializeField]
     private TMPro.TMP_Text _textMesh = null;
 
-    private ResourceGenerator _resourceGenerator = null;
+    private ResourceGeneratorData _resourceGenerator = null;
 
-    public void SetActive(ResourceGenerator resourceGenerator)
+    public void SetActive(ResourceGeneratorData resourceGenerator)
     {
+        _resourceGenerator = resourceGenerator;
         if (resourceGenerator is null)
         {
             gameObject.SetActive(false);
-            return;
         }
         else
         {
             gameObject.SetActive(true);
-            _resourceGenerator = resourceGenerator;
-            _icon.sprite = resourceGenerator.ResourceGeneratorData.resourceType.iconSprite;
+            _icon.sprite = resourceGenerator.resourceType.iconSprite;
         }
     }
 
     private void Update()
     {
-        int nearbyResourceAmount = _resourceGenerator.GetNearByResourceAmount();
-        float percent = Mathf.RoundToInt((float)nearbyResourceAmount / _resourceGenerator.ResourceGeneratorData.maxResourceAmount * 100f);
+        if (_resourceGenerator is null)
+        {
+            return;
+        }
+        int nearbyResourceAmount = ResourceGenerator.GetNearByResourceAmount(transform, _resourceGenerator);
+        float percent = Mathf.RoundToInt((float)nearbyResourceAmount / _resourceGenerator.maxResourceAmount * 100f);
         _textMesh.text = percent.ToString() + "%";
     }
 }

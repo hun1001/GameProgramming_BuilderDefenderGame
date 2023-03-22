@@ -21,7 +21,7 @@ public class ResourceGenerator : MonoBehaviour
 
     private IEnumerator Start()
     {
-        int nearbyResourceAmount = GetNearByResourceAmount();
+        int nearbyResourceAmount = ResourceGenerator.GetNearByResourceAmount(transform, resourceGeneratorData);
 
         if (nearbyResourceAmount == 0)
         {
@@ -46,9 +46,9 @@ public class ResourceGenerator : MonoBehaviour
         }
     }
 
-    public int GetNearByResourceAmount()
+    public static int GetNearByResourceAmount(Transform t, ResourceGeneratorData r)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resourceGeneratorData.resourceDetectionRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(t.position, r.resourceDetectionRadius);
 
         int nearbyResourceAmount = 0;
 
@@ -56,14 +56,14 @@ public class ResourceGenerator : MonoBehaviour
         {
             if (c.TryGetComponent(out ResourceNode resourceNode))
             {
-                if (resourceNode.CompareResourceType(resourceGeneratorData.resourceType))
+                if (resourceNode.CompareResourceType(r.resourceType))
                 {
                     nearbyResourceAmount++;
                 }
             }
         }
 
-        nearbyResourceAmount = Mathf.Clamp(nearbyResourceAmount, 0, resourceGeneratorData.maxResourceAmount);
+        nearbyResourceAmount = Mathf.Clamp(nearbyResourceAmount, 0, r.maxResourceAmount);
 
         return nearbyResourceAmount;
     }

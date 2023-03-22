@@ -6,6 +6,8 @@ public class BuildingGhost : MonoBehaviour
 {
     [SerializeField]
     private SpriteRenderer _ghostSpriteRenderer = null;
+    [SerializeField]
+    private ResourceNearByOverlay _resourceNearByOverlay = null;
 
     private void Awake()
     {
@@ -14,10 +16,12 @@ public class BuildingGhost : MonoBehaviour
             if (BuildingManager.Instance.ActiveBuildingType is null)
             {
                 SetGhostSprite(null, false);
+                _resourceNearByOverlay.SetActive(null);
             }
             else
             {
                 SetGhostSprite(BuildingManager.Instance.ActiveBuildingType.iconSprite);
+                _resourceNearByOverlay.SetActive(BuildingManager.Instance.ActiveBuildingType.resourceGeneratorData);
             }
         };
     }

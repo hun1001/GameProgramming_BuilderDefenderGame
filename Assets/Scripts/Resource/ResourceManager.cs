@@ -26,25 +26,6 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.Q))
-    //     {
-    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-    //         AddResource(resourceTypeList.list[0], 1);
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.W))
-    //     {
-    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-    //         AddResource(resourceTypeList.list[1], 1);
-    //     }
-    //     if (Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-    //         AddResource(resourceTypeList.list[2], 1);
-    //     }
-    // }
-
     private void TestLogResourceAmountDictionary()
     {
         foreach (ResourceTypeSO resourceType in resourceAmountDictionary.Keys)
@@ -56,6 +37,25 @@ public class ResourceManager : MonoBehaviour
     public void AddResource(ResourceTypeSO resourceType, int amount)
     {
         resourceAmountDictionary[resourceType] += amount;
+        OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public bool CanAfford(ResourceAmount[] resourceAmountArray)
+    {
+        foreach (ResourceAmount resourceAmount in resourceAmountArray)
+        {
+            if (ResourceAmountDictionary[resourceAmount.ResourceType] < resourceAmount.Amount)
+                return false;
+        }
+        return true;
+    }
+
+    public void SpendResources(ResourceAmount[] resourceAmountArray)
+    {
+        foreach (ResourceAmount resourceAmount in resourceAmountArray)
+        {
+            ResourceAmountDictionary[resourceAmount.ResourceType] -= resourceAmount.Amount;
+        }
         OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 }

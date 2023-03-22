@@ -31,8 +31,11 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (activeBuildingType is not null && CanSpawnHarvester())
+            if (activeBuildingType is not null && CanSpawnHarvester() && ResourceManager.Instance.CanAfford(activeBuildingType.constructionResourceCostArray))
+            {
+                ResourceManager.Instance.SpendResources(activeBuildingType.constructionResourceCostArray);
                 Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -62,5 +65,6 @@ public class BuildingManager : MonoBehaviour
         OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private bool CanSpawnHarvester() => Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;// && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), 25f).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType is not null).ToArray().Length > 0;
+    // 이거 바꿔야됨
+    private bool CanSpawnHarvester() => true;//Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;// && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), 25f).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType is not null).ToArray().Length > 0;
 }

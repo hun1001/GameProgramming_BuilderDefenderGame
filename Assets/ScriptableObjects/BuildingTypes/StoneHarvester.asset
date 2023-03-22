@@ -16,6 +16,9 @@ MonoBehaviour:
   prefab: {fileID: 8493229178591858552, guid: b951f8697c3d7ac499a3038ddebd6b37, type: 3}
   iconSprite: {fileID: 21300000, guid: 2263e91ebcd2a254dab5f4caccb4a7af, type: 3}
   minConstructionRadius: 7
+  constructionResourceCostArray:
+  - _resourceType: {fileID: 11400000, guid: 7e6f878f87ce2b147b3d70ab090e499e, type: 2}
+    _amount: 30
   resourceGeneratorData:
     timerMax: 1
     resourceType: {fileID: 11400000, guid: 069c12f2d1357244293624793a6d157c, type: 2}
