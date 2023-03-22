@@ -52,6 +52,8 @@ public class BuildingTypeSelectUI : MonoBehaviour
         AddInfoShowTrigger(e, EventTriggerType.PointerEnter, _arrowTransform.GetChild(3).gameObject, true);
         AddInfoShowTrigger(e, EventTriggerType.PointerExit, _arrowTransform.GetChild(3).gameObject, false);
 
+        _arrowTransform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = "Mouse";
+
 
         foreach (BuildingTypeSO buildingType in buildingTypeList.list)
         {
@@ -64,7 +66,12 @@ public class BuildingTypeSelectUI : MonoBehaviour
             buttonTransform.GetComponent<RectTransform>().anchoredPosition = new Vector2(defaultOffsetAmount + (offsetAmount * index++), 10);
             buttonTransform.GetChild(1).GetComponent<Image>().sprite = buildingType.iconSprite;
 
-            //buttonTransform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = $"W: {buildingType.constructionResourceCostArray[0].Amount}" + $"
+            string str = "";
+            foreach (ResourceAmount resourceAmount in buildingType.constructionResourceCostArray)
+            {
+                str += $"{resourceAmount.ResourceType.nameShortString}: <color=#{resourceAmount.ResourceType.colorHex}>{resourceAmount.Amount}</color> ";
+            }
+            buttonTransform.GetChild(3).GetChild(1).GetComponent<TextMeshProUGUI>().text = str;
 
             e = buttonTransform.GetComponent<EventTrigger>();
 

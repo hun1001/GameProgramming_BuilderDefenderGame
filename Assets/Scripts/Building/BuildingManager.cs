@@ -31,10 +31,25 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (activeBuildingType is not null && CanSpawnHarvester() && ResourceManager.Instance.CanAfford(activeBuildingType.constructionResourceCostArray))
+            if (activeBuildingType is not null)
             {
-                ResourceManager.Instance.SpendResources(activeBuildingType.constructionResourceCostArray);
-                Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
+                if (!CanSpawnBuilding(activeBuildingType, Input.mousePosition, out string a))
+                {
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePosition.z = 0;
+                    ToolTipUICanvas printToolTip = Instantiate(Resources.Load<GameObject>("ToolTipUICanvas"), mousePosition, Quaternion.identity).transform.GetChild(0).GetComponent<ToolTipUICanvas>().SetText(a);
+                }
+                else if (ResourceManager.Instance.CanAfford(activeBuildingType.constructionResourceCostArray))
+                {
+                    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    mousePosition.z = 0;
+                    ToolTipUICanvas printToolTip = Instantiate(Resources.Load<GameObject>("ToolTipUICanvas"), mousePosition, Quaternion.identity).transform.GetChild(0).GetComponent<ToolTipUICanvas>().SetText("자원이 부족합니다.");
+                }
+                else
+                {
+                    ResourceManager.Instance.SpendResources(activeBuildingType.constructionResourceCostArray);
+                    Instantiate(activeBuildingType.prefab, GetMouseWorldPosition(), Quaternion.identity);
+                }
             }
         }
 
@@ -65,6 +80,48 @@ public class BuildingManager : MonoBehaviour
         OnActiveBuildingTypeChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    // 이거 바꿔야됨
-    private bool CanSpawnHarvester() => true;//Physics2D.OverlapBoxAll(GetMouseWorldPosition() + (Vector3)activeBuildingType.prefab.GetComponent<BoxCollider2D>().offset, activeBuildingType.prefab.GetComponent<BoxCollider2D>().size, 0f).Length == 0 && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), activeBuildingType.minConstructionRadius).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType == activeBuildingType).ToArray().Length == 0;// && Physics2D.OverlapCircleAll(GetMouseWorldPosition(), 25f).Where(x => x.gameObject.GetComponent<BuildingTypeHolder>().buildingType is not null).ToArray().Length > 0;
+    private bool CanSpawnBuilding(BuildingTypeSO buildingType, Vector3 position, out string errorMessage)
+    {
+        BoxCollider2D boxCollider2D = buildingType.prefab.GetComponent<BoxCollider2D>();
+        Collider2D[] collider2DArray = Physics2D.OverlapBoxAll(position + (Vector3)boxCollider2D.offset, boxCollider2D.size, 0);
+
+        bool isAreaClear = collider2DArray.Length == 0;
+
+        if (!isAreaClear)
+        {
+            errorMessage = "건물을 놓을 수 없는 곳입니다.";
+            return false;
+        }
+
+        collider2DArray = Physics2D.OverlapCircleAll(position, buildingType.minConstructionRadius);
+
+        foreach (Collider2D collider2D in collider2DArray)
+        {
+            BuildingTypeHolder buildingTypeHoler = collider2D.GetComponent<BuildingTypeHolder>();
+            if (buildingTypeHoler != null)
+            {
+                if (buildingTypeHoler.buildingType == buildingType)
+                {
+                    errorMessage = "같은 유형의 건물이 근처에 있습니다.";
+                    return false;
+                }
+            }
+        }
+
+        float maxConstructionRadius = 25f;
+        collider2DArray = Physics2D.OverlapCircleAll(position, maxConstructionRadius);
+
+        foreach (Collider2D collider2D in collider2DArray)
+        {
+            BuildingTypeHolder buildingTypeHoler = collider2D.GetComponent<BuildingTypeHolder>();
+            if (buildingTypeHoler != null)
+            {
+                errorMessage = "";
+                return true;
+            }
+        }
+
+        errorMessage = "다른 건물이 주변에 있어야 합니다.";
+        return false;
+    }
 }
