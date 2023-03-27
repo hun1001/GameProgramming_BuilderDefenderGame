@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
 
 
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D _rigidbody2D;
     private Transform targetTransform;
 
     private HealthSystem healthSystem;
@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
+        _rigidbody2D = GetComponent<Rigidbody2D>();
         if (BuildingManager.Instance.GetHQBuilding() != null)
         {
             targetTransform = BuildingManager.Instance.GetHQBuilding().transform;
@@ -78,11 +78,11 @@ public class Enemy : MonoBehaviour
 
             float moveSpeed = 6f;
 
-            rigidbody2D.velocity = moveDir * moveSpeed;
+            _rigidbody2D.velocity = moveDir * moveSpeed;
         }
         else
         {
-            rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.velocity = Vector2.zero;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -94,9 +94,9 @@ public class Enemy : MonoBehaviour
             HealthSystem healthSystem = building.GetComponent<HealthSystem>();
             healthSystem.Damage(10);
             this.healthSystem.Damage(999);
-            
+
         }
-        
+
     }
 
     private void LookForTargets()
