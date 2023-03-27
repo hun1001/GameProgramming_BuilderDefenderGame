@@ -9,20 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18be3870f68fa8e47a5ab6349c9ee5c9, type: 3}
+  m_Script: {fileID: 11500000, guid: aea5005967ba29244b59cf4c50259463, type: 3}
   m_Name: GoldHarvester
   m_EditorClassIdentifier: 
   nameString: Gold Harvester
-  prefab: {fileID: 8493229178591858552, guid: 6c4833dffa924fc49bfb2c9b142ea796, type: 3}
-  iconSprite: {fileID: 21300000, guid: 8ead931dd91bff8489e75de9c414f17f, type: 3}
-  minConstructionRadius: 7
-  constructionResourceCostArray:
-  - _resourceType: {fileID: 11400000, guid: 7e6f878f87ce2b147b3d70ab090e499e, type: 2}
-    _amount: 50
-  - _resourceType: {fileID: 11400000, guid: 069c12f2d1357244293624793a6d157c, type: 2}
-    _amount: 50
+  prefab: {fileID: 1452321714570201410, guid: ee0d0809448e9a54487d75410b5894ad, type: 3}
+  hasResourceGeneratorData: 1
   resourceGeneratorData:
     timerMax: 2
-    resourceType: {fileID: 11400000, guid: e4993b28940d1014e933b8b7667c17ef, type: 2}
-    resourceDetectionRadius: 7
+    resourceType: {fileID: 11400000, guid: 7bf994b0d2aa05f458aef22dbc0a488a, type: 2}
+    resourceDatectionRadius: 7
     maxResourceAmount: 3
+  sprite: {fileID: 21300000, guid: 8ead931dd91bff8489e75de9c414f17f, type: 3}
+  minConstructionRadius: 10
+  constructionResourceCostArray:
+  - resourceType: {fileID: 11400000, guid: 74dfa3aa6a60e894e9e53b61c81749df, type: 2}
+    amount: 200
+  - resourceType: {fileID: 11400000, guid: 9e13d9bfae1a93949a5041df7c7a24bc, type: 2}
+    amount: 200
+  healthAmountMax: 100
+  constructionTimerMax: 15
