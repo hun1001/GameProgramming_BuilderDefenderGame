@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 395eeb7351dd6074580c489a238bb98e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthAmountMax: 200
+  healthAmountMax: 300
 --- !u!114 &-2157691865914293131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4551ce070fe0748ad5b2dbfb94ae98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootTimerMax: 0.3
+  shootTimerMax: 0.2
 --- !u!1 &3579313045704984664
 GameObject:
   m_ObjectHideFlags: 0

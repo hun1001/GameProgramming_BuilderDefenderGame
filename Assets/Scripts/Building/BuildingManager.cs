@@ -70,7 +70,7 @@ public class BuildingManager : MonoBehaviour
             if (activeBuildingType != null)
             //activeBuildingType이 널이 아니면 실행
             {
-                if (CanSpawnBuilding(activeBuildingType, UtilsClass.GetMouseWorldPosition(), out string erroMessage))
+                if (CanSpawnBuilding(activeBuildingType, UtilsClass.GetMouseWorldPosition(), out string errorMessage))
                 {
                     if (ResourceManager.Instance.CanAfford(activeBuildingType.constructionResourceCostArray))
                     {
@@ -88,7 +88,7 @@ public class BuildingManager : MonoBehaviour
                 }
                 else
                 {
-                    TooltipUI.Instance.Show(erroMessage, new TooltipUI.TooltipTimer { timer = 2f });
+                    TooltipUI.Instance.Show(errorMessage, new TooltipUI.TooltipTimer { timer = 2f });
                 }
             }
 
@@ -110,14 +110,12 @@ public class BuildingManager : MonoBehaviour
     {
         return activeBuildingType;
         //activeBuildingType을 반환
-
     }
 
 
     private bool CanSpawnBuilding(BuildingTypeSO buildingType, Vector3 position, out string errorMessage)
     //https://docs.microsoft.com/ko-kr/dotnet/csharp/language-reference/keywords/out-parameter-modifier
     //out 매개변수자 이걸 사용하면 함수 밖의 변수들의 값을 정할 수 있음
-
     {
         BoxCollider2D boxCollider2D = buildingType.prefab.GetComponent<BoxCollider2D>();
 
@@ -145,7 +143,7 @@ public class BuildingManager : MonoBehaviour
             //buildingTypeHolder가 null이 아니면 
             {
                 if (buildingTypeHolder.buildingType == buildingType)
-                //buildingTypeHolder.buildingType과 buildikngType이 같으면 false를 return하여 설치 불가
+                //buildingTypeHolder.buildingType과 buildingType이 같으면 false를 return하여 설치 불가
                 {
                     errorMessage = "Too close to another building of the same type!";
                     return false;
@@ -158,7 +156,7 @@ public class BuildingManager : MonoBehaviour
             ResourceGeneratorData resourceGeneratorData = buildingType.resourceGeneratorData;
             int nearbyResourceAmount = ResourceGenerator.GetNearbyResourceAmount(resourceGeneratorData, position);
 
-            if(nearbyResourceAmount == 0)
+            if (nearbyResourceAmount == 0)
             {
                 errorMessage = "There are no nearby Resource Nodes!";
                 return false;
@@ -182,7 +180,7 @@ public class BuildingManager : MonoBehaviour
             }
         }
 
-        errorMessage = "Too far from any oother buildings";
+        errorMessage = "Too far from any other buildings";
         return false;
     }
 
