@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     */
 
     public event EventHandler OnResourceAmountChanged;
-    //event를 사용하려면 using Systema를 선언
+    //event를 사용하려면 using System를 선언
     //public event EventHandler 이벤트-이름 // 이벤트 정의
 
 
@@ -52,7 +52,6 @@ public class ResourceManager : MonoBehaviour
         {
             AddResource(resourceAmount.resourceType, resourceAmount.amount);
         }
-
     }
 
 

@@ -72,8 +72,7 @@ public class ResourceGenerator : MonoBehaviour
             //timer가 0이 될시 
             timer += timerMax;
             //timer에 timerMax를 더함.
-            ResourceManager.Instance.AddResource(resourceGeneratorData.resourceType, 100);
-
+            ResourceManager.Instance.AddResource(resourceGeneratorData.resourceType, 1);
         }
     }
 
