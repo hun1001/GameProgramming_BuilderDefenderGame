@@ -6,23 +6,8 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance { get; private set; }
-    //싱글톤 get으로 값을 가져갈수 있지만, private이기 때문에 값을 설정할 수 없음.
-
-    //위 코드의 원래 코드
-    /*
-    private static ResourceManager instance;
-    public static ResourceManager GetInstance() {
-        return instance;
-    }
-    private static void SetInstance(ResourceManager set) {
-        instance = set;
-    }
-    */
 
     public event EventHandler OnResourceAmountChanged;
-    //event를 사용하려면 using System를 선언
-    //public event EventHandler 이벤트-이름 // 이벤트 정의
-
 
     [SerializeField] private List<ResourceAmount> startingResourceAmountList;
 
@@ -69,24 +54,11 @@ public class ResourceManager : MonoBehaviour
         resourceAmountDictionary[resourceType] += amount;
 
         OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);
-        //아래 코드와 같은 의미
-        //OnResourceAmountChanged라는 Event에 어떤 함수도 들어오지 않으면 
-        /*if(OnResourceAmountChanged != null)
-        {
-            OnResourceAmountChanged(this, EventArgs.Empty);
-        }*/
-        //this는 이 오브젝트가 보낸다는 뜻, EventArgs.Empty는 Event파라미터로 보낼 것이 없을 때
-        //null로 보낼 시 e가 받았고 e로 무언가를 시도할 때 발생하는 잠재적인 Null 참조 오류를 피하기 위함.
-
-        //resourceAmountDictionary[resourceType]의 키값에 amount만큼 더한다.
     }
 
     public int GetResourceAmount(ResourceTypeSO resourceType)
-    //ResourceTypeSO형태로 매개변수를 받아 resourceAmountDictionary에 사용
     {
         return resourceAmountDictionary[resourceType];
-        //int형으로 함수를 선언했기 때문에 반환을 해야한다.
-        //resourceType의 키 값을 resourceAmountDictionary를 return으로 반환한다.
     }
 
     public bool CanAfford(ResourceAmount[] resourceAmountArray)
