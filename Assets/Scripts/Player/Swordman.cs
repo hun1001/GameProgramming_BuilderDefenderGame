@@ -9,7 +9,15 @@ public class Swordman : PlayerController
         m_HealthSystem.OnDied += (_, _) =>
         {
             m_Anim.Play("Die");
+            StartCoroutine(DieCoroutine());
         };
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.PlaySound(SoundManager.Sound.GameOver);
+        GameOverUI.Instance.Show();
     }
 
     private void Update()
