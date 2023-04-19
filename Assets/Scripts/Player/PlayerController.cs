@@ -23,19 +23,6 @@ public abstract class PlayerController : MonoBehaviour
 
     [Header("[Setting]")]
     public float MoveSpeed = 6;
-    public int JumpCount = 2;
-    public float jumpForce = 15f;
-
-    protected void AnimUpdate()
-    {
-        if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {
-            if (Input.GetKey(KeyCode.Mouse0))
-            {
-                m_Anim.Play("Attack");
-            }
-        }
-    }
 
     protected void Flip(bool bLeft)
     {
