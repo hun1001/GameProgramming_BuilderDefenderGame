@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Swordman : PlayerController
 {
+    private void Awake()
+    {
+        m_HealthSystem.OnDied += (_, _) =>
+        {
+            m_Anim.Play("Die");
+        };
+    }
+
     private void Update()
     {
         checkInput();
@@ -21,7 +29,6 @@ public class Swordman : PlayerController
             return;
         }
 
-
         m_MoveDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if (!m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -32,7 +39,6 @@ public class Swordman : PlayerController
             }
             else
             {
-
                 if (m_MoveDir.magnitude <= 0)
                 {
                     m_Anim.Play("Idle");
@@ -41,28 +47,20 @@ public class Swordman : PlayerController
                 {
                     m_Anim.Play("Run");
                 }
-
             }
         }
 
         transform.transform.Translate(new Vector3(m_MoveDir.x * MoveSpeed * Time.deltaTime, m_MoveDir.y * MoveSpeed * Time.deltaTime, 0));
 
-        // 기타 이동 인풋.
         if (Input.GetKey(KeyCode.D))
         {
             if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 return;
-
-            if (!Input.GetKey(KeyCode.A))
-                Flip(false);
         }
         else if (Input.GetKey(KeyCode.A))
         {
             if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 return;
-
-            if (!Input.GetKey(KeyCode.D))
-                Flip(true);
         }
         else if (Input.GetKey(KeyCode.S))
         {
@@ -74,5 +72,20 @@ public class Swordman : PlayerController
             if (m_Anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 return;
         }
+
+        if (UtilsClass.GetMouseWorldPosition().x < transform.position.x)
+        {
+            Flip(true);
+        }
+        else
+        {
+            Flip(false);
+        }
+    }
+
+    public override void Attack()
+    {
+        m_AttackCollision.gameObject.SetActive(true);
+        m_AttackCollision.OnAttack(transform, transform.localScale.x == -1);
     }
 }

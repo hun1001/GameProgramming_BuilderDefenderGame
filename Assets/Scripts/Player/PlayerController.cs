@@ -15,6 +15,12 @@ public abstract class PlayerController : MonoBehaviour
     [SerializeField]
     protected Animator m_Anim;
 
+    [SerializeField]
+    protected AttackCollision m_AttackCollision;
+
+    [SerializeField]
+    protected HealthSystem m_HealthSystem;
+
     [Header("[Setting]")]
     public float MoveSpeed = 6;
     public int JumpCount = 2;
@@ -35,4 +41,6 @@ public abstract class PlayerController : MonoBehaviour
     {
         transform.localScale = new Vector3(bLeft ? 1 : -1, 1, 1);
     }
+
+    public abstract void Attack();
 }
