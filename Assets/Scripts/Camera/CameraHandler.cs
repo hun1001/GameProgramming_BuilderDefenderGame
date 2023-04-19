@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class CameraHandler : MonoBehaviour {
+public class CameraHandler : MonoBehaviour
+{
     public static CameraHandler Instance { get; private set; }
 
     [SerializeField] private CinemachineVirtualCamera cinemachineVirtualCamera;
@@ -12,38 +13,45 @@ public class CameraHandler : MonoBehaviour {
     private float targetOrthographicSize;
     private bool edgeScrolling;
 
-    private void Awake() {
+    private void Awake()
+    {
         Instance = this;
-
         edgeScrolling = PlayerPrefs.GetInt("edgeScrolling", 0) == 1;
     }
 
-    private void Start() {
+    private void Start()
+    {
         orthographicSize = cinemachineVirtualCamera.m_Lens.OrthographicSize;
         targetOrthographicSize = orthographicSize;
     }
 
-    private void Update() {
-        HandleMovement();
+    private void Update()
+    {
         HandleZoom();
     }
 
-    private void HandleMovement() {
+    private void HandleMovement()
+    {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        if (edgeScrolling) {
+        if (edgeScrolling)
+        {
             float edgeScrollingSize = 30;
-            if (Input.mousePosition.x > Screen.width - edgeScrollingSize) {
+            if (Input.mousePosition.x > Screen.width - edgeScrollingSize)
+            {
                 x = +1f;
             }
-            if (Input.mousePosition.x < edgeScrollingSize) {
+            if (Input.mousePosition.x < edgeScrollingSize)
+            {
                 x = -1f;
             }
-            if (Input.mousePosition.y > Screen.height - edgeScrollingSize) {
+            if (Input.mousePosition.y > Screen.height - edgeScrollingSize)
+            {
                 y = +1f;
             }
-            if (Input.mousePosition.y < edgeScrollingSize) {
+            if (Input.mousePosition.y < edgeScrollingSize)
+            {
                 y = -1f;
             }
         }
@@ -55,7 +63,8 @@ public class CameraHandler : MonoBehaviour {
         transform.position += moveDir * movespeed * Time.deltaTime;
     }
 
-    private void HandleZoom() {
+    private void HandleZoom()
+    {
         float zoomAmount = 2f;
         targetOrthographicSize += -Input.mouseScrollDelta.y * zoomAmount;
 
@@ -69,13 +78,15 @@ public class CameraHandler : MonoBehaviour {
         cinemachineVirtualCamera.m_Lens.OrthographicSize = orthographicSize;
     }
 
-    public void SetEdgeScrolling(bool edgeScrolling) {
+    public void SetEdgeScrolling(bool edgeScrolling)
+    {
         this.edgeScrolling = edgeScrolling;
 
         PlayerPrefs.SetInt("edgeScrolling", edgeScrolling ? 1 : 0);
     }
 
-    public bool GetEdgeScrolling() {
+    public bool GetEdgeScrolling()
+    {
         return edgeScrolling;
     }
 }
