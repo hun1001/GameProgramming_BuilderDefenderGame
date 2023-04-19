@@ -2,12 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowProjectile : MonoBehaviour
-{
+public class ArrowProjectile : MonoBehaviour {
+    private Enemy targetEnemy;
+    private Vector3 lastMoveDir;
 
-    public static ArrowProjectile Create(Vector3 position, Enemy enemy)
-    {
-        Transform arrowTransform = Instantiate(GameAssets.Instance.pfArrowProjectile, position, Quaternion.identity);
+
+    private float timeToDie = 2f;
+
+
+
+    public static ArrowProjectile Create(Vector3 position, Enemy enemy) {
+        Transform pfArrowProjectile = GameAssets.Instance.pfArrowProjectile;
+        Transform arrowTransform = Instantiate(pfArrowProjectile, position, Quaternion.identity);
 
         ArrowProjectile arrowProjectile = arrowTransform.GetComponent<ArrowProjectile>();
         arrowProjectile.SetTarget(enemy);
@@ -15,43 +21,39 @@ public class ArrowProjectile : MonoBehaviour
         return arrowProjectile;
     }
 
-    private Enemy targetEnemy;
-    private Vector3 lastMoveDir;
-    private float timeToDie = 2f;
 
-    private void Update()
-    {
+
+    private void Update() {
         Vector3 moveDir;
-        if (targetEnemy != null)
-        {
+
+        if (targetEnemy != null) {
             moveDir = (targetEnemy.transform.position - transform.position).normalized;
             lastMoveDir = moveDir;
         }
-        else
-        {
+        else {
             moveDir = lastMoveDir;
         }
-        transform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(moveDir));
 
         float moveSpeed = 20f;
         transform.position += moveDir * moveSpeed * Time.deltaTime;
-        if (timeToDie < 0f)
-        {
+
+        transform.eulerAngles = new Vector3(0, 0, UtilsClass.GetAngleFromVector(moveDir));
+
+        timeToDie -= Time.deltaTime;
+        if (timeToDie < 0f) {
             Destroy(gameObject);
         }
     }
 
-    private void SetTarget(Enemy targetEnemy)
-    {
+    private void SetTarget(Enemy targetEnemy) {
         this.targetEnemy = targetEnemy;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    private void OnTriggerEnter2D(Collider2D collision) {
         Enemy enemy = collision.GetComponent<Enemy>();
 
-        if (enemy != null)
-        {
+        if (enemy != null) {
+
             int damageAmount = 10;
             enemy.GetComponent<HealthSystem>().Damage(damageAmount);
 

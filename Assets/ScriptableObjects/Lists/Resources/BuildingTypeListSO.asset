@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7073e6b073412744b8812b8ff2fc682, type: 3}
+  m_Script: {fileID: 11500000, guid: eaaa31d50128ad84c9aac3ac1ecbd9cd, type: 3}
   m_Name: BuildingTypeListSO
   m_EditorClassIdentifier: 
   list:
-  - {fileID: 11400000, guid: 70b8e1c9d1729af4a9f5ca7b473acdfa, type: 2}
-  - {fileID: 11400000, guid: 464b9b5fb5063f7479ededcdcf649106, type: 2}
-  - {fileID: 11400000, guid: e53469d52d4b1cd4e8ea1d941f9d8ba6, type: 2}
-  - {fileID: 11400000, guid: 36cbef04e57f6d2449fd829636bbe5ba, type: 2}
-  - {fileID: 11400000, guid: 833aa452d3bc93744b277328268d5eb7, type: 2}
+  - {fileID: 11400000, guid: ade8eb6401d7160479ee1bec699688b9, type: 2}
+  - {fileID: 11400000, guid: ad51fb6be3811af45bb4be9f79f3d4f1, type: 2}
+  - {fileID: 11400000, guid: 8d0237c526dcc8a4683015b2ad3662f7, type: 2}
+  - {fileID: 11400000, guid: 0dc1354e9ef5e7345a9325c9591c4731, type: 2}
+  - {fileID: 11400000, guid: 78b5954716519e747b39a9a5af9604ca, type: 2}

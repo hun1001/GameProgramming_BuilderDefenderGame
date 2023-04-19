@@ -2,32 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class UtilsClass
-{
-
+public static class UtilsClass {
     private static Camera mainCamera;
-
-    public static Vector3 GetMouseWorldPosition()
-    {
-        if (mainCamera == null) mainCamera = Camera.main;
+    public static Vector3 GetMouseWorldPosition() {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
 
         Vector3 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        //Camera.Main.ScreenToWorldPoint를 이용하여 마우스 위치를 가져옴
         mouseWorldPosition.z = 0f;
         return mouseWorldPosition;
     }
 
-    public static Vector3 GetRandomDir()
-    {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+    public static Vector3 GetRandomDir() {
+        return new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(-1f, 1f)
+        ).normalized;
     }
 
-
-    public static float GetAngleFromVector(Vector3 vector)
-    {
-        float radians =  Mathf.Atan2(vector.y, vector.x);
+    public static float GetAngleFromVector(Vector3 vecotr) {
+        float radians = Mathf.Atan2(vecotr.y, vecotr.x);
         float degrees = radians * Mathf.Rad2Deg;
+
         return degrees;
     }
-
 }

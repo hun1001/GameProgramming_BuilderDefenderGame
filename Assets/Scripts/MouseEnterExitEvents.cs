@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class MouseEnterExitEvents : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -12,11 +11,11 @@ public class MouseEnterExitEvents : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnMouseEnter.Invoke(this, EventArgs.Empty);
+        OnMouseEnter?.Invoke(this, EventArgs.Empty);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        OnMouseExit.Invoke(this, EventArgs.Empty);
+        OnMouseExit?.Invoke(this, EventArgs.Empty);
     }
 }
