@@ -68,8 +68,8 @@ public class CameraHandler : MonoBehaviour
         float zoomAmount = 2f;
         targetOrthographicSize += -Input.mouseScrollDelta.y * zoomAmount;
 
-        float minOrthographicSize = 10;
-        float maxOrthographicSize = 30;
+        float minOrthographicSize = 5;
+        float maxOrthographicSize = 15;
         targetOrthographicSize = Mathf.Clamp(targetOrthographicSize, minOrthographicSize, maxOrthographicSize);
 
         float zoomSpeed = 5f;
