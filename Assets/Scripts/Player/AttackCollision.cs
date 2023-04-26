@@ -20,6 +20,7 @@ public class AttackCollision : MonoBehaviour
     private IEnumerator OnAttackEnd()
     {
         yield return new WaitForSeconds(0.1f);
+        transform.position = Vector3.zero;
         gameObject.SetActive(false);
     }
 }

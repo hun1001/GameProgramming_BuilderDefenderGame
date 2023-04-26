@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
 
         healthSystem.OnDamaged += HealthSystem_OnDamaged;
         healthSystem.OnHealed += HealthSystem_OnHealed;
-        healthSystem.OnHealthAmounMaxChanged += HealthSystem_OnHealthAmounMaxChanged;
+        healthSystem.OnHealthAmountMaxChanged += HealthSystem_OnHealthAmounMaxChanged;
 
         ConstructHealthBarSeparators();
         UpdateBar();

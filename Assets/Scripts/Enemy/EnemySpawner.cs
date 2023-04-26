@@ -4,47 +4,28 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public enum State
-    {
-        Spawning,
-        Invincible,
-        Common
-    }
+    private HealthSystem healthSystem = null;
 
-    private State state = State.Common;
-    private float stateTimer = 0f;
-
-    private void SetState(State state)
+    private void Awake()
     {
-        switch (state)
+        healthSystem = GetComponent<HealthSystem>();
+
+        healthSystem.OnDied += (_, _) =>
         {
-            case State.Spawning:
-                stateTimer = 3f;
-                break;
-            case State.Invincible:
-                stateTimer = 3f;
-                break;
-            case State.Common:
-                stateTimer = 3f;
-                break;
+            Destroy(gameObject);
+        };
+    }
+
+    public void Spawning()
+    {
+        Enemy.Create(this.transform.position + UtilsClass.GetRandomDir() * UnityEngine.Random.Range(0f, 10f));
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("PlayerAttackCollision"))
+        {
+            healthSystem.Damage(20);
         }
-        this.state = state;
-    }
-
-    private void Update()
-    {
-        stateTimer -= Time.deltaTime;
-    }
-
-    private void Spawning()
-    {
-    }
-
-    private void Invincible()
-    {
-    }
-
-    private void Common()
-    {
     }
 }

@@ -3,69 +3,82 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : MonoBehaviour {
+public class HealthSystem : MonoBehaviour
+{
     [SerializeField] private int healthAmountMax;
     public event EventHandler OnDamaged;
     public event EventHandler OnDied;
     public event EventHandler OnHealed;
-    public event EventHandler OnHealthAmounMaxChanged;
+    public event EventHandler OnHealthAmountMaxChanged;
 
     private int healthAmount;
 
-    private void Awake() {
+    private void Awake()
+    {
         healthAmount = healthAmountMax;
     }
 
-    public void Damage(int damageAmount) {
+    public void Damage(int damageAmount)
+    {
         healthAmount -= damageAmount;
         healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
 
         OnDamaged?.Invoke(this, EventArgs.Empty);
 
-        if (IsDead()) {
+        if (IsDead())
+        {
             OnDied?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public bool IsDead() {
+    public bool IsDead()
+    {
         return healthAmount == 0;
     }
 
-    public int GetHealthAmount() {
+    public int GetHealthAmount()
+    {
         return healthAmount;
     }
 
-    public float GetHealthAmountNormalized() {
+    public float GetHealthAmountNormalized()
+    {
         return (float)healthAmount / healthAmountMax;
     }
 
-    public bool IsFullHealth() {
+    public bool IsFullHealth()
+    {
         return healthAmount == healthAmountMax;
     }
 
-    public void SetHealthAmountMax(int healthAmountMax, bool updateHealthAmount) {
+    public void SetHealthAmountMax(int healthAmountMax, bool updateHealthAmount)
+    {
         this.healthAmountMax = healthAmountMax;
 
-        if (updateHealthAmount) {
+        if (updateHealthAmount)
+        {
             healthAmount = healthAmountMax;
         }
 
-        OnHealthAmounMaxChanged?.Invoke(this, EventArgs.Empty);
+        OnHealthAmountMaxChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void Heal(int healAmount) {
+    public void Heal(int healAmount)
+    {
         healthAmount += healAmount;
         healthAmount = Mathf.Clamp(healthAmount, 0, healthAmountMax);
 
         OnHealed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void HealFull() {
+    public void HealFull()
+    {
         healthAmount = healthAmountMax;
         OnHealed?.Invoke(this, EventArgs.Empty);
     }
 
-    public int GetHealthAmounMax() {
+    public int GetHealthAmounMax()
+    {
         return healthAmountMax;
     }
 }
