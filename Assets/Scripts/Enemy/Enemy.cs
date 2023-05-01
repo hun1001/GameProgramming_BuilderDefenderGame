@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour
         if (building != null)
         {
             HealthSystem healthSystem = building.GetComponent<HealthSystem>();
-            healthSystem.Damage(10);
+            healthSystem.Damage(1);
             Destroy(gameObject);
             this.healthSystem.Damage(999);
         }
