@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 42144627}
   - component: {fileID: 42144629}
   - component: {fileID: 42144628}
+  - component: {fileID: 42144632}
   - component: {fileID: 42144630}
   - component: {fileID: 42144631}
   m_Layer: 0
@@ -257,6 +258,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthAmountMax: 100
+--- !u!114 &42144632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42144625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29fcb079459c1240b80a31d73416d1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &46500615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9276,6 +9289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d80a9e1dda8146e4cbb2f5a128785946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyConst: 1
   spawnPositionTransformList:
   - {fileID: 1163349082}
   - {fileID: 1139049428}

@@ -28,6 +28,11 @@ public class Swordman : PlayerController
         {
             m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x - 0.1f, m_rigidbody.velocity.y - 0.1f);
         }
+
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, -115, 115);
+        pos.y = Mathf.Clamp(pos.y, -65, 65);
+        transform.position = pos;
     }
 
     public void checkInput()

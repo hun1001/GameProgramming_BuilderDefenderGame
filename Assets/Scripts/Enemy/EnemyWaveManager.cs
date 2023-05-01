@@ -17,6 +17,7 @@ public class EnemyWaveManager : MonoBehaviour
 
     private State state;
     private int waveNumber;
+    public int EnemyConst = 1;
 
     public event EventHandler OnWaveNumberChanged;
 
@@ -27,9 +28,18 @@ public class EnemyWaveManager : MonoBehaviour
     private EnemySpawner enemySpawner;
 
     [SerializeField] private List<EnemySpawner> spawnPositionTransformList;
+    public List<EnemySpawner> SpawnPositionTransformList => spawnPositionTransformList;
     [SerializeField] private Transform nextWaveSpawnPositionTransform;
 
     //private Queue<EnemySpawner> spawnPositionTransformQueue = new();
+
+    public void CheckLastSpawner()
+    {
+        if (spawnPositionTransformList.Count == 0)
+        {
+            GameSceneManager.Load(GameSceneManager.Scene.MainMenuScene);
+        }
+    }
 
     private void Awake()
     {
@@ -71,7 +81,11 @@ public class EnemyWaveManager : MonoBehaviour
                     if (nextEnemySpawnTimer < 0f)
                     {
                         nextEnemySpawnTimer = UnityEngine.Random.Range(0f, .2f);
-                        // enemySpawner.Spawning();
+                        if (enemySpawner.gameObject.activeSelf == false)
+                        {
+                            enemySpawner = RandomEnemySpawner;
+                        }
+                        enemySpawner.Spawning();
                         remainingEnemySpawnAmount--;
 
                         if (remainingEnemySpawnAmount <= 0)
@@ -85,7 +99,6 @@ public class EnemyWaveManager : MonoBehaviour
                 }
                 break;
         }
-
     }
 
     private void SpawnWave()
@@ -94,7 +107,7 @@ public class EnemyWaveManager : MonoBehaviour
         enemySpawner = RandomEnemySpawner;
         nextWaveSpawnPositionTransform.position = enemySpawner.transform.position;
         nextWaveSpawnTimer = 10f;
-        remainingEnemySpawnAmount = 5 + 3 * waveNumber;
+        remainingEnemySpawnAmount = 5 + 7 * (int)Mathf.Pow(waveNumber, EnemyConst);
         waveNumber++;
         OnWaveNumberChanged?.Invoke(this, EventArgs.Empty);
     }
@@ -111,6 +124,10 @@ public class EnemyWaveManager : MonoBehaviour
 
     public Vector3 GetSpawnPosition()
     {
+        if (enemySpawner.gameObject.activeSelf == false)
+        {
+            enemySpawner = RandomEnemySpawner;
+        }
         return enemySpawner.transform.position;
     }
 

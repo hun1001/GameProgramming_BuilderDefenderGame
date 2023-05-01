@@ -12,7 +12,10 @@ public class EnemySpawner : MonoBehaviour
 
         healthSystem.OnDied += (_, _) =>
         {
-            Destroy(gameObject);
+            EnemyWaveManager.Instance.SpawnPositionTransformList.Remove(this);
+            this.gameObject.SetActive(false);
+            EnemyWaveManager.Instance.CheckLastSpawner();
+            EnemyWaveManager.Instance.EnemyConst++;
         };
     }
 
